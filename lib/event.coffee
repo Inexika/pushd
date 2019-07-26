@@ -38,12 +38,12 @@ class Event
             null
 
     exists: (cb) ->
-        if @name is 'broadcast'
-            cb(true)
-        else if (subscriber = @unicastSubscriber())?
-            subscriber.get (fields) =>
-                cb(fields?)
-        else
+#        if @name is 'broadcast'
+#            cb(true)
+#        else if (subscriber = @unicastSubscriber())?
+#            subscriber.get (fields) =>
+#                cb(fields?)
+#        else
             @redis.sismember "events", @name, (err, exists) =>
                 cb(exists)
 

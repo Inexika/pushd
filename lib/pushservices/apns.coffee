@@ -39,32 +39,29 @@ class PushServiceAPNS
             device.subscriberId = subscriber.id # used for error logging
             if subOptions?.ignore_message isnt true and alert = payload.localizedMessage(info.lang)
                 note.alert = alert
+#            badge = parseInt(payload.badge || info.badge)
+#            if payload.incrementBadge
+#                badge += 1
+#            category = payload.category
+#            contentAvailable = payload.contentAvailable
+#            if not contentAvailable? and @conf.contentAvailable?
+#              contentAvailable = @conf.contentAvailable
+#            if not category? and @conf.category?
+#              category = @conf.category
+#            note.badge = badge if not isNaN(badge)
+#            note.sound = payload.sound
+#            note.category = category
+#            note.contentAvailable = contentAvailable
 
-            badge = parseInt(payload.badge || info.badge)
-            if payload.incrementBadge
-                badge += 1
-            
-            category = payload.category
-            contentAvailable = payload.contentAvailable
-
-            if not contentAvailable? and @conf.contentAvailable?
-              contentAvailable = @conf.contentAvailable
-
-            if not category? and @conf.category?
-              category = @conf.category
-
-            note.badge = badge if not isNaN(badge)
-            note.sound = payload.sound
-            note.category = category
-            note.contentAvailable = contentAvailable
+            note.badge = parseInt(payload.badge)
             if @payloadFilter?
                 for key, val of payload.data
                     note.payload[key] = val if key in @payloadFilter
             else
                 note.payload = payload.data
             @driver.pushNotification note, device
-            # On iOS we have to maintain the badge counter on the server
-            if payload.incrementBadge
-                subscriber.incr 'badge'
+# On iOS we have to maintain the badge counter on the server
+#            if payload.incrementBadge
+#               subscriber.incr 'badge'
 
 exports.PushServiceAPNS = PushServiceAPNS

@@ -12,9 +12,9 @@ class Payload
         @msg = {}
         @data = {}
         @var = {}
-        @incrementBadge = yes
-
-        # Read fields
+        @badge = {}
+#      @incrementBadge = yes
+# Read fields
         for own key, value of data
             if typeof key isnt 'string' or key.length == 0
                 throw new Error("Invalid field (empty)")
@@ -25,7 +25,7 @@ class Payload
                 when 'title' then @title.default = value
                 when 'msg' then @msg.default = value
                 when 'sound' then @sound = value
-                when 'incrementBadge' then @incrementBadge = value != 'false'
+#                when 'incrementBadge' then @incrementBadge = value != 'false'
                 when 'badge' then @badge = value
                 when 'category' then @category = value
                 when 'contentAvailable' then @contentAvailable = value != 'false'
@@ -37,7 +37,7 @@ class Payload
 
         # Detect empty payload
         sum = 0
-        sum += (key for own key of @[type]).length for type in ['title', 'msg', 'data']
+        sum += (key for own key of @[type]).length for type in ['title', 'msg', 'data', 'badge']
         if sum is 0 then throw new Error('Empty payload')
 
     localizedTitle: (lang) ->
