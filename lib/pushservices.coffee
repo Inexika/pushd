@@ -9,7 +9,11 @@ class PushServices
 
     push: (subscriber, subOptions, payload, cb) ->
         subscriber.get (info) =>
-            if info then @services[info.proto]?.push(subscriber, subOptions, payload)
+            try
+                if info then @services[info.proto]?.push(subscriber, subOptions, payload)
+            catch e
+                logger.log 'push error ' + e
             cb() if cb
+            
 
 exports.PushServices = PushServices
