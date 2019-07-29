@@ -46,8 +46,10 @@ class EventPublisher extends events.EventEmitter
                             protoCounts[info.proto] += 1
                         else
                             protoCounts[info.proto] = 1
-
-                @pushServices.push(subscriber, subOptions, payload, done)
+                try	
+                    @pushServices.push(subscriber, subOptions, payload, done)
+                catch e
+                    logger.log 'push error ' + e
             , (totalSubscribers) =>
                 # finished
                 logger.verbose "Pushed to #{totalSubscribers} subscribers"
