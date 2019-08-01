@@ -58,7 +58,9 @@ exports.setup = (app, authorize, eventPublisher) ->
         antiIdleInterval = setInterval ->
             res.write "\n"
         , 10000
-
+        res.socket.on 'error', e => 
+            console.log(e)
+            
         res.socket.on 'close', =>
             clearInterval antiIdleInterval
             for eventName in eventNames

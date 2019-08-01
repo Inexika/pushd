@@ -21,6 +21,9 @@ else
 if settings.server.redis_db_number?
     redis.select(settings.server.redis_db_number)
 
+logger.on 'error', err => 
+    process.stderr.write "Internal error in error logger: #{err}\n"
+
 if settings.logging?
     logger.remove(logger.transports.Console)
     for loggerconfig in settings.logging
