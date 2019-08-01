@@ -23,6 +23,7 @@ if settings.server.redis_db_number?
 
 logger.on 'error', err => 
     process.stderr.write "Internal error in error logger: #{err}\n"
+logger.exitOnError = false
 
 if settings.logging?
     logger.remove(logger.transports.Console)
