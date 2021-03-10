@@ -1,5 +1,5 @@
 node_modules/
-settings.coffee
+settings.js
 *.pem
 *.swp
-package-lock.json
+*.p8
